@@ -44,8 +44,10 @@ func (c *Conn) postConnect() error {
 	authName, authData, err := readAuthority(c.host, c.display)
 	noauth := false
 	if err != nil {
-		Logger.Printf("Could not get authority info: %v", err)
-		Logger.Println("Trying connection without authority info...")
+	    if os.Getenv("XGB_DEBUG") != "" {
+			Logger.Printf("Could not get authority info: %v", err)
+			Logger.Println("Trying connection without authority info...")
+		}
 		authName = ""
 		authData = []byte{}
 		noauth = true
